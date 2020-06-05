@@ -68,25 +68,34 @@ public class Logic {
         return rst;
     }
 
+    public static boolean monoHorizontal(int[][] table, int row) {
+        boolean result = true;
+        for (int j = 0; j < table.length; j++) {
+            if (table[row][j] != 1) {
+                result = false;
+                break;
+            }
+        }
+        return result;
+    }
+
+    public static boolean monoVertical(int[][] table, int cell) {
+        boolean result = true;
+        for (int i = 0; i < table.length; i++) {
+            if (table[i][cell] != 1) {
+                result = false;
+                break;
+            }
+        }
+        return result;
+    }
+
     public boolean isWin() {
         int[][] table = this.convert();
         boolean result = false;
-        int horizontal = 0;
-        int vertical = 0;
-        for (int row = 0; row < table.length; row++) {
-            if (table[row][row] == 1) {
-                for (int cell = 0; cell < table.length; cell++) {
-                    if (table[row][cell] == 1) {
-                        horizontal++;
-                    }
-                    if (table[cell][row] == 1) {
-                        vertical++;
-                    }
-                }
-                if (horizontal == table.length ||  vertical == table.length) {
-                    result = true;
-                    break;
-                }
+        for (int index = 0; index < table.length; index++) {
+            if (table[index][index] == 1 && (Logic.monoHorizontal(table, index) || Logic.monoVertical(table, index))) {
+                result = true;
                 break;
             }
         }
