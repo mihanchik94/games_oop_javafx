@@ -26,13 +26,27 @@ public class Logic {
         int index = this.findBy(source);
         if (index != -1) {
             Cell[] steps = this.figures[index].way(source, dest);
-            if (steps.length > 0 && steps[steps.length - 1].equals(dest)) {
+            boolean emptyWay = checkMove(steps);
+            if (steps.length > 0 && steps[steps.length - 1].equals(dest) && emptyWay) {
                 rst = true;
                 this.figures[index] = this.figures[index].copy(dest);
             }
         }
         return rst;
     }
+
+    public boolean checkMove(Cell[] steps) {
+        for (int i = 0; i < steps.length - 1; i++) {
+            for (int j = 0; j < figures.length; j++) {
+                if (figures[j] != null) {
+                    if (steps[i].equals(figures[j].position()))
+                        return false;
+                }
+            }
+        }
+        return true;
+    }
+
 
     public void clean() {
         for (int position = 0; position != this.figures.length; position++) {
